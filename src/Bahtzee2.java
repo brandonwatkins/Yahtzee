@@ -1,7 +1,7 @@
 /**
  * Brandon Watkins
  * 16 Feb 2017
- * Simple Bahtzee program
+ * This is a GUI Yahtzee Program
  */
 
 import java.awt.BorderLayout;
