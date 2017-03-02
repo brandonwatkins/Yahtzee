@@ -73,7 +73,7 @@ public class Bahtzee2 {
 		middlePanel = new JPanel();
 		
 		
-		
+		//setUpMenuBar();
 		setUpLogo();
 		setupUpperSection();
 		setupLowerSection();
@@ -89,7 +89,13 @@ public class Bahtzee2 {
 		/******************* GUI SETUP **********************/
 	}
 	
+	
 	/******************* GUI SETUP **********************/
+	private void setUpMenuBar() {
+		
+		
+	}
+
 	private void setupRollSection() {	
 
 		buttonPanel = new JPanel();
@@ -166,12 +172,14 @@ public class Bahtzee2 {
 		LowerSection.setBorder(titled);
 
 		JButton threeKindButton = new JButton("3 of a kind");
+		threeKindButton.addActionListener(all);
+		threeKindButton.setPreferredSize(new Dimension(100, 30));
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		threeKindButton.setPreferredSize(new Dimension(100, 30));
 		LowerSection.add(threeKindButton, gbc);
 
 		JButton fourKindButton = new JButton("4 of a kind");
+		fourKindButton.addActionListener(all);
 		fourKindButton.setPreferredSize(new Dimension(100, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -179,6 +187,7 @@ public class Bahtzee2 {
 		LowerSection.add(fourKindButton, gbc);
 
 		JButton fullHouseButton = new JButton("Full House");
+		fullHouseButton.addActionListener(all);
 		fullHouseButton.setPreferredSize(new Dimension(100, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -186,6 +195,7 @@ public class Bahtzee2 {
 		LowerSection.add(fullHouseButton, gbc);
 
 		JButton smStraightButton = new JButton("Sm. Straight");
+		smStraightButton.addActionListener(all);
 		smStraightButton.setPreferredSize(new Dimension(100, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -193,6 +203,7 @@ public class Bahtzee2 {
 		LowerSection.add(smStraightButton, gbc);
 	
 		JButton lgStraightButton = new JButton("Lg. Straight");
+		lgStraightButton.addActionListener(all);
 		lgStraightButton.setPreferredSize(new Dimension(100, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -200,6 +211,7 @@ public class Bahtzee2 {
 		LowerSection.add(lgStraightButton, gbc);
 		
 		JButton yahtzeeButton = new JButton("Yahtzee");
+		yahtzeeButton.addActionListener(all);
 		yahtzeeButton.setPreferredSize(new Dimension(100, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -207,6 +219,7 @@ public class Bahtzee2 {
 		LowerSection.add(yahtzeeButton, gbc);
 		
 		JButton chanceButton = new JButton("Chance");
+		chanceButton.addActionListener(all);
 		chanceButton.setPreferredSize(new Dimension(100, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -299,6 +312,15 @@ public class Bahtzee2 {
 		gbc.gridy = 8;
 		LowerSection.add(grandTotalTextField, gbc);
 		
+		//Load handlers
+		handlers.add(new ThreeOfAKindButtonHandler(threeKindButton, threeKindTextField));
+		handlers.add(new FourOfAKindButtonHandler(fourKindButton, fourKindTextField));
+		handlers.add(new FullHouseButtonHandler(fullHouseButton, fullHouseTextField));
+		handlers.add(new SmallStraightButtonHandler(smStraightButton, smStraightTextField));
+		handlers.add(new LargeStraightButtonHandler(lgStraightButton, lgStraightTextField));
+		handlers.add(new YahtzeeButtonHandler(yahtzeeButton, yahtzeeTextField));
+		handlers.add(new ChanceButtonHandler(chanceButton, chanceTextField));
+		
 		middlePanel.add(LowerSection);		
 	}
 
@@ -320,7 +342,7 @@ public class Bahtzee2 {
 
 		JButton twosButton = new JButton("Twos");
 		twosButton.addActionListener(all);
-		twosbutton.setPreferredSize(new Dimension(80, 30));
+		twosButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -359,13 +381,13 @@ public class Bahtzee2 {
 		UpperSection.add(sixesButton, gbc);
 		
 		//Corresponding TextFields 
-		JTextField onesTextField = new JTextField("");
-		onesTextField.setPreferredSize(new Dimension(80, 30));
-		onesTextField.setEditable(false);
+		JTextField acesTextField = new JTextField("");
+		acesTextField.setPreferredSize(new Dimension(80, 30));
+		acesTextField.setEditable(false);
 		gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		UpperSection.add(onesTextField, gbc);
+		UpperSection.add(acesTextField, gbc);
 		
 		JTextField twosTextField = new JTextField("");
 		twosTextField.setPreferredSize(new Dimension(80, 30));
@@ -450,6 +472,14 @@ public class Bahtzee2 {
 		gbc.gridy = 8;
 		UpperSection.add(upperTotalSumTextField, gbc);
 		
+		//Load handlers
+		handlers.add(new AcesButtonHandler(acesButton, acesTextField));
+		handlers.add(new TwosButtonHandler(twosButton, twosTextField));
+		handlers.add(new ThreesButtonHandler(threesButton, threesTextField));
+		handlers.add(new FoursButtonHandler(foursButton, foursTextField));
+		handlers.add(new FivesButtonHandler(fivesButton, fivesTextField));
+		handlers.add(new SixesButtonHandler(sixesButton, sixesTextField));
+		
 		middlePanel.add(UpperSection);
 	}
 
@@ -465,31 +495,6 @@ public class Bahtzee2 {
 		//frame.pack();
 	}
 
-	
-	
-	
-	private int chanceScore(){
-		int score = 0;
-		for(int i = 0; i < results.length; i++){
-			score += (i + 1) * results[i];
-		}
-		return score;
-	}
-	
-	private boolean hasYahtzee() {
-		
-		boolean hasFive = false;
-		for(int i = 0; i < results.length; i++){
-			if(results[i] == 5){
-				hasFive = true;
-				break;
-			} else if (results[i] > 0){
-				break;
-			}
-		}
-		return hasFive;
-	}
-	
 	private void findResults() {
 		clearResults();
 		for(Dice d : dice){
@@ -519,10 +524,7 @@ public class Bahtzee2 {
 			rollDice();
 			
 			findResults();
-			System.out.println("Has yahtzee? " + hasYahtzee());
-			System.out.println("Chance score: " + chanceScore());
-			System.out.println(Arrays.toString(results));
-			//System.out.println(Dice.getFaceValue());
+			
 			
 			}
 				
@@ -601,9 +603,9 @@ public class Bahtzee2 {
 	/******************* Upper Section Super Class - HANDLER SETUP **********************/
 
  	/******************* Upper Section Child Classes - HANDLER SETUP **********************/
- 	class OnesButtonHandler extends UpperButtonHandler {
+ 	class AcesButtonHandler extends UpperButtonHandler {
 
-		public OnesButtonHandler(JButton button, JTextField text) {
+		public AcesButtonHandler(JButton button, JTextField text) {
 			super(button, text);
 			myVal = 1;
 		}
@@ -671,7 +673,6 @@ public class Bahtzee2 {
 		@Override
 		public void updateScore() {
 			
-			
 			int sum = 0;
 			for(Dice d : dice){
 				sum += d.getFaceValue();
@@ -693,12 +694,6 @@ public class Bahtzee2 {
 
 		@Override
 		public boolean validRoll() {
-			return true;
-		}
-		
-		@Override
-		public void updateScore() {
-			
 			for(int i = 0; i < results.length; i++){
 				if(results[i] == 5){
 					myTextField.setText(String.valueOf("50"));
@@ -707,8 +702,16 @@ public class Bahtzee2 {
 					break;
 				}
 			}
+			return true;
+		}
+		
+		@Override
+		public void updateScore() {
+			if(validRoll()){
+			
 			//update lower total
 			super.updateScore();
+			}
 		}
 		
 	}
@@ -836,6 +839,8 @@ public class Bahtzee2 {
 			}
 		}
 	}
+	
+	
 	
 	
 	
