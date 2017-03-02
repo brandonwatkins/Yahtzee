@@ -41,14 +41,15 @@ public class Bahtzee2 {
 	private int rollCounter;
 	private int results[] = {0, 0, 0, 0, 0, 0};
 	private String title = "Yahtzee";
+	AllButtonListener all = new AllButtonListener();
 	
-	private final ImageIcon DICE_BLANK	= new ImageIcon( "images/blank.png");
-	private final ImageIcon DICE_1 		= new ImageIcon( "images/1.png");	
-	private final ImageIcon DICE_2	 	= new ImageIcon( "images/2.png");
-	private final ImageIcon DICE_3 	 	= new ImageIcon( "images/3.png");	
-	private final ImageIcon DICE_4	 	= new ImageIcon( "images/4.png");
-	private final ImageIcon DICE_5	 	= new ImageIcon( "images/5.png");
-	private final ImageIcon DICE_6	 	= new ImageIcon( "images/6.png");
+	private final ImageIcon DICE_BLANK	= new ImageIcon( "Yahtzee/images/blank.png");
+	private final ImageIcon DICE_1 		= new ImageIcon( "Yahtzee/images/1.png");	
+	private final ImageIcon DICE_2	 	= new ImageIcon( "Yahtzee/images/2.png");
+	private final ImageIcon DICE_3 	 	= new ImageIcon( "Yahtzee/images/3.png");	
+	private final ImageIcon DICE_4	 	= new ImageIcon( "Yahtzee/images/4.png");
+	private final ImageIcon DICE_5	 	= new ImageIcon( "Yahtzee/images/5.png");
+	private final ImageIcon DICE_6	 	= new ImageIcon( "Yahtzee/images/6.png");
 		
 	private ImageIcon DICE_IMAGES[] = {
 			DICE_1,
@@ -61,6 +62,7 @@ public class Bahtzee2 {
 	
 	private ArrayList<JToggleButton> buttons = new ArrayList<JToggleButton>();
 	private ArrayList<Dice> dice = new ArrayList<Dice>();
+	private ArrayList<ButtonHandler> handlers = new ArrayList<ButtonHandler>();
 	/******************* GUI SETUP **********************/
 	
 	public void go() {
@@ -69,6 +71,8 @@ public class Bahtzee2 {
 		frame = new JFrame("Bahtzee");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
 		middlePanel = new JPanel();
+		
+		
 		
 		setUpLogo();
 		setupUpperSection();
@@ -308,19 +312,22 @@ public class Bahtzee2 {
 
 		//Buttons
 		JButton acesButton = new JButton("Aces");
+		acesButton.addActionListener(all);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		acesButton.setPreferredSize(new Dimension(80, 30));
 		UpperSection.add(acesButton, gbc);
 
-		JButton twosbutton = new JButton("Twos");
+		JButton twosButton = new JButton("Twos");
+		twosButton.addActionListener(all);
 		twosbutton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		UpperSection.add(twosbutton, gbc);
+		UpperSection.add(twosButton, gbc);
 
 		JButton threesButton = new JButton("Threes");
+		threesButton.addActionListener(all);
 		threesButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -328,6 +335,7 @@ public class Bahtzee2 {
 		UpperSection.add(threesButton, gbc);
 
 		JButton foursButton = new JButton("Fours");
+		foursButton.addActionListener(all);
 		foursButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -335,6 +343,7 @@ public class Bahtzee2 {
 		UpperSection.add(foursButton, gbc);
 	
 		JButton fivesButton = new JButton("Fives");
+		fivesButton.addActionListener(all);
 		fivesButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -342,6 +351,7 @@ public class Bahtzee2 {
 		UpperSection.add(fivesButton, gbc);
 		
 		JButton sixesButton = new JButton("Sixes");
+		sixesButton.addActionListener(all);
 		sixesButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
 		gbc.gridx = 0;
@@ -445,7 +455,7 @@ public class Bahtzee2 {
 
 	private void setUpLogo() {
 
-		ImageIcon logoImage = new ImageIcon("images/YahtzeeLogo300.png");
+		ImageIcon logoImage = new ImageIcon("Yahtzee/images/YahtzeeLogo300.png");
 		
 		JLabel logoLabel = new JLabel("", logoImage, JLabel.CENTER);
 		JPanel logoPanel = new JPanel(new BorderLayout());
@@ -810,5 +820,27 @@ public class Bahtzee2 {
 	}
 	
 	/******************* Lower Section Child Classes - HANDLER SETUP **********************/
+	
+	/******************* Action Listeners - HANDLER SETUP **********************/
+	class AllButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			JButton clickedButton = (JButton) e.getSource();
+			for(ButtonHandler handler : handlers){
+				if(handler.canHandle(clickedButton)){
+					handler.updateScore();
+					break;
+				}
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	/******************* Action Listeners - HANDLER SETUP **********************/
 
 }
