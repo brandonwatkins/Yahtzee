@@ -8,15 +8,15 @@
 public class Dice {
 
 	private final static int NUM_FACES = 6;
-	private static int faceValue;
-	private static int numRolls = 0;
+	private int faceValue;
+	private int numRolls = 0;
 
-	public static int getNumRolls() {
+	public int getNumRolls() {
 		return numRolls;
 	}
 
-	public static void setNumRolls(int numRolls) {
-		Dice.numRolls = numRolls;
+	public void setNumRolls(int numRolls) {
+		this.numRolls = numRolls;
 	}
 
 	public Dice() {
@@ -28,7 +28,7 @@ public class Dice {
 	}
 
 
-	public static int roll() {
+	public int roll() {
 		faceValue = (int)(Math.random() * NUM_FACES) + 1;
 		numRolls++;
 		return faceValue;
@@ -40,7 +40,7 @@ public class Dice {
 	}
 
 
-	public static int getFaceValue() {
+	public int getFaceValue() {
 		//String result = Integer.toString(faceValue);
 		return faceValue;
 	}
