@@ -30,6 +30,7 @@ public class Dice {
 
 	public int roll() {
 		faceValue = (int)(Math.random() * NUM_FACES) + 1;
+		//int faceValue = 6;
 		numRolls++;
 		return faceValue;
 	}
