@@ -524,6 +524,7 @@ public class Bahtzee2 {
 			rollDice();
 			
 			findResults();
+			System.out.println(Arrays.toString(results));
 			
 			
 			}
@@ -556,6 +557,7 @@ public class Bahtzee2 {
 		 * @return True if it is valid, false otherwise
 		 */
 		public abstract boolean validRoll();
+			//myTextField.setText(String.valueOf("0"));
 		
 		/**
 		 * Reset my button and text field for a new game
@@ -699,6 +701,7 @@ public class Bahtzee2 {
 					myTextField.setText(String.valueOf("50"));
 					break;
 				} else if (results[i] > 0){
+					myTextField.setText(String.valueOf("0"));
 					break;
 				}
 			}
@@ -708,7 +711,6 @@ public class Bahtzee2 {
 		@Override
 		public void updateScore() {
 			if(validRoll()){
-			
 			//update lower total
 			super.updateScore();
 			}
@@ -767,15 +769,35 @@ public class Bahtzee2 {
 
 		@Override
 		public boolean validRoll() {
+			boolean hasThree = false;
+			boolean hasTwo 	 = false;
+			for(int i = 0; i < results.length; i++){
+				if(results[i] == 3){
+					hasThree = true;
+				}
+				if(results[i] == 2){
+					hasTwo = true;
+				} 
+				if(hasThree && hasTwo == true){
+					break;
+				}
+			}
 			return true;
 		}
+			/**
+			else {
+				myTextField.setText(String.valueOf("0"));
+				return false;
+			}
+			**/
 		
 		@Override
 		public void updateScore() {
+			if(validRoll()){
 			
-			
-			//update lower total
-			super.updateScore();
+				//update lower total
+				super.updateScore();
+			}
 		}
 		
 	}
@@ -788,15 +810,26 @@ public class Bahtzee2 {
 
 		@Override
 		public boolean validRoll() {
+			int sum = 0;
+			for(int i = 0; i < results.length; i++){
+				if(results[i] == 4){
+					for(Dice d : dice){
+						sum += d.getFaceValue();
+					}
+					myTextField.setText(String.valueOf(sum));
+					break;
+				} else myTextField.setText(String.valueOf("0"));
+			}
 			return true;
 		}
 		
 		@Override
 		public void updateScore() {
+			if(validRoll()){
 			
-			
-			//update lower total
-			super.updateScore();
+				//update lower total
+				super.updateScore();
+			}
 		}
 		
 	}
@@ -809,15 +842,26 @@ public class Bahtzee2 {
 
 		@Override
 		public boolean validRoll() {
+			int sum = 0;
+			for(int i = 0; i < results.length; i++){
+				if(results[i] == 3){
+					for(Dice d : dice){
+						sum += d.getFaceValue();
+					}
+					myTextField.setText(String.valueOf(sum));
+					break;
+				} else myTextField.setText(String.valueOf("0"));
+			}
 			return true;
 		}
 		
 		@Override
 		public void updateScore() {
+			if(validRoll()){
 			
-			
-			//update lower total
-			super.updateScore();
+				//update lower total
+				super.updateScore();
+			}
 		}
 		
 	}
