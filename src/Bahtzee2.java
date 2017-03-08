@@ -42,7 +42,8 @@ public class Bahtzee2 {
 	private JFrame frame;
 	private JButton rollButton;
 	private JButton resetButton;
-	private int numRolls = 0; 
+	private int firstRollCounter = 0;
+ 
 	
 	private JPanel buttonPanel;
 	private JPanel middlePanel;
@@ -72,11 +73,13 @@ public class Bahtzee2 {
 			DICE_6
 	};	
 	
+	
 	private ArrayList<JToggleButton> diceButtons = new ArrayList<JToggleButton>();
 	private ArrayList<JButton> scoreCardButtons = new ArrayList<JButton>();
 	private ArrayList<JTextField> scoreCardTextFields = new ArrayList<JTextField>();
 	private ArrayList<Dice> dice = new ArrayList<Dice>();
 	private ArrayList<ButtonHandler> handlers = new ArrayList<ButtonHandler>();
+	private ArrayList<JTextField> upperTextFields = new ArrayList<JTextField>();
 	/******************* GUI SETUP **********************/
 	
 	public void go() {
@@ -160,6 +163,7 @@ public class Bahtzee2 {
 					if(result == JOptionPane.YES_OPTION){
 						resetDice();
 						resetScoreCard();
+						firstRollCounter = 0;
 					}
 			}
 		});
@@ -226,8 +230,6 @@ public class Bahtzee2 {
 		
 		helpMenu.add(helpAboutItem);
 		
-		
-		
 		frame.setJMenuBar(menuBar);
 		
 	}
@@ -284,7 +286,7 @@ public class Bahtzee2 {
 	}
 	
 	private void enableScoreCardButtons(boolean flag){
-		for(JToggleButton b : diceButtons){
+		for(JButton b : scoreCardButtons){
 			b.setEnabled(flag);
 		}
 	}
@@ -320,6 +322,7 @@ public class Bahtzee2 {
 			f.setEditable(false);
 		}
 		
+		enableScoreCardButtons(false);
 		
 	}
 	
@@ -647,12 +650,14 @@ public class Bahtzee2 {
 		gbc.gridy = 8;
 		UpperSection.add(upperTotalSumLabel, gbc);
 		
+		//TextFields
 		JTextField upperTotalTextField = new JTextField("");
 		upperTotalTextField.setPreferredSize(new Dimension(80, 30));
 		upperTotalTextField.setEditable(false);
 		gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 6;
+		upperTextFields.add(upperTotalTextField);
 		UpperSection.add(upperTotalTextField, gbc);
 		
 		JTextField bonusTextField = new JTextField("");
@@ -661,6 +666,7 @@ public class Bahtzee2 {
 		gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 7;
+		upperTextFields.add(bonusTextField);
 		UpperSection.add(bonusTextField, gbc);
 		
 		JTextField upperTotalSumTextField = new JTextField(upperTotal + "");
@@ -669,6 +675,7 @@ public class Bahtzee2 {
 		gbc.weightx = 0.5;
 		gbc.gridx = 1;
 		gbc.gridy = 8;
+		upperTextFields.add(upperTotalSumTextField);
 		UpperSection.add(upperTotalSumTextField, gbc);
 		
 		//Load handlers
@@ -715,13 +722,19 @@ public class Bahtzee2 {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			enableScoreCardButtons(true);
-			
+			if(firstRollCounter == 0){
+				enableScoreCardButtons(true);
+			}
+
+
 			if (rollCounter == 0){
 				enableDiceButtons(true);
+				
+				//System.err.println("Roll 0");
 			}
 				rollCounter++;
-				
+				firstRollCounter++;
+
 			if (rollCounter == 3) {
 				rollButton.setEnabled(false);
 				resetButton.setEnabled(true);
@@ -1104,7 +1117,7 @@ public class Bahtzee2 {
 		public boolean validRoll() {
 			int sum = 0;
 			for(int i = 0; i < results.length; i++){
-				if(results[i] == 4){
+				if(results[i] >= 4){
 					for(Dice d : dice){
 						sum += d.getFaceValue();
 					}
@@ -1139,7 +1152,7 @@ public class Bahtzee2 {
 		public boolean validRoll() {
 			int sum = 0;
 			for(int i = 0; i < results.length; i++){
-				if(results[i] == 3){
+				if(results[i] >= 3){
 					for(Dice d : dice){
 						sum += d.getFaceValue();
 					}
@@ -1156,7 +1169,7 @@ public class Bahtzee2 {
 		@Override
 		public void updateScore() {
 			if(validRoll()){
-			
+				
 				//update lower total
 				super.updateScore();
 			}
