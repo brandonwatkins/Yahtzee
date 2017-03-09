@@ -53,7 +53,12 @@ public class Bahtzee2 {
 	private boolean ChanceButtonPressed = false;
 	private boolean YahtzeeButtonPressed = false;
 	
-	//private boolean ThreesButtonPressed = false;
+	private boolean OnesButtonPressed = false;
+	private boolean TwosButtonPressed = false;
+	private boolean ThreesButtonPressed = false;
+	private boolean FoursButtonPressed = false;
+	private boolean FivesButtonPressed = false;
+	private boolean SixesButtonPressed = false;
 	
 	private JPanel buttonPanel;
 	private JPanel middlePanel;
@@ -105,7 +110,12 @@ public class Bahtzee2 {
 	JButton yahtzeeButton = new JButton("Yahtzee");
 	JButton chanceButton = new JButton("Chance");
 	
+	JButton acesButton = new JButton("Aces");
+	JButton twosButton = new JButton("Twos");
 	JButton threesButton = new JButton("Threes");
+	JButton foursButton = new JButton("Fours");
+	JButton fivesButton = new JButton("Fives");
+	JButton sixesButton = new JButton("Sixes");
 	
 	HallOfFame h = new HallOfFame("/brandonwatkins/Documents/topTenFile.txt");
 	
@@ -371,6 +381,23 @@ public class Bahtzee2 {
 		upperTotalSumTextField.setText("");
 		gameOverCounter = 0;
 		hasBonus = false;
+		
+		FullHouseButtonPressed = false;
+		ThreeKindButtonPressed = false;
+		FourKindButtonPressed = false;
+		SmStraightButtonPressed = false;
+		LgStraightButtonPressed = false;
+		ChanceButtonPressed = false;
+		YahtzeeButtonPressed = false;
+		
+		OnesButtonPressed = false;
+		TwosButtonPressed = false;
+		ThreesButtonPressed = false;
+		FoursButtonPressed = false;
+		FivesButtonPressed = false;
+		SixesButtonPressed = false;
+		
+		
 	}
 	
 	private void setupLowerSection() {
@@ -555,7 +582,6 @@ public class Bahtzee2 {
 		UpperSection.setBorder(titled);
 
 		//Buttons
-		JButton acesButton = new JButton("Aces");
 		acesButton.addActionListener(all);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -564,7 +590,6 @@ public class Bahtzee2 {
 		scoreCardButtons.add(acesButton);
 		UpperSection.add(acesButton, gbc);
 
-		JButton twosButton = new JButton("Twos");
 		twosButton.addActionListener(all);
 		twosButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
@@ -574,7 +599,6 @@ public class Bahtzee2 {
 		scoreCardButtons.add(twosButton);
 		UpperSection.add(twosButton, gbc);
 
-		//JButton threesButton = new JButton("Threes");
 		threesButton.addActionListener(all);
 		threesButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
@@ -584,7 +608,6 @@ public class Bahtzee2 {
 		scoreCardButtons.add(threesButton);
 		UpperSection.add(threesButton, gbc);
 
-		JButton foursButton = new JButton("Fours");
 		foursButton.addActionListener(all);
 		foursButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
@@ -594,7 +617,6 @@ public class Bahtzee2 {
 		scoreCardButtons.add(foursButton);
 		UpperSection.add(foursButton, gbc);
 	
-		JButton fivesButton = new JButton("Fives");
 		fivesButton.addActionListener(all);
 		fivesButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
@@ -604,7 +626,6 @@ public class Bahtzee2 {
 		scoreCardButtons.add(fivesButton);
 		UpperSection.add(fivesButton, gbc);
 		
-		JButton sixesButton = new JButton("Sixes");
 		sixesButton.addActionListener(all);
 		sixesButton.setPreferredSize(new Dimension(80, 30));
 		gbc.weightx = 0.5;
@@ -774,6 +795,32 @@ public class Bahtzee2 {
 			chanceButton.setEnabled(false);
 		}
 		
+		if(OnesButtonPressed == true) {
+			acesButton.setEnabled(false);
+		}
+		
+		if(TwosButtonPressed == true) {
+			twosButton.setEnabled(false);
+		}
+		if(ThreesButtonPressed == true) {
+			threesButton.setEnabled(false);
+		}
+		
+		
+		if(FoursButtonPressed == true) {
+			foursButton.setEnabled(false);
+		}
+		
+		if(FivesButtonPressed == true) {
+			fivesButton.setEnabled(false);
+		}
+		
+		if(SixesButtonPressed == true) {
+			sixesButton.setEnabled(false);
+		}
+		
+		
+		
 	}
 	
 	 private void updateBonusScore() {
@@ -798,6 +845,7 @@ public class Bahtzee2 {
 			enableScoreCardButtons(true);
 			disableIfSelected();
 			
+
 			if (rollCounter == 0){
 				enableDiceButtons(true);
 			}
@@ -889,6 +937,31 @@ public class Bahtzee2 {
 			findResults();
 			
 			score = results[myVal - 1] * myVal;
+			
+			if(myVal == 1){
+				OnesButtonPressed = true;
+			}
+			
+			if(myVal == 2){
+				TwosButtonPressed = true;
+			}
+			
+			if(myVal == 3){
+				ThreesButtonPressed = true;
+			}
+			
+			if(myVal == 4){
+				FoursButtonPressed = true;
+			}
+			
+			if(myVal == 5){
+				FivesButtonPressed = true;
+			}
+			
+			if(myVal == 6){
+				SixesButtonPressed = true;
+			}
+			
 			myTextField.setText(String.valueOf(score));
 			
 			if(hasBonus == false) {
